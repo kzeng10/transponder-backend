@@ -21,7 +21,7 @@ if mins == 0:
         if #user takes action on push notification:
             break
         else:
-            message = client.messages.create(body="test",
+            message = client.messages.create(body= name "did not check in, person was last at" location,
                 to="+14155496801",    # Replace with your phone number
                 from_="+19099627422") # Replace with your Twilio number
             print message.sid
