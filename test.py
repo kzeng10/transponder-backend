@@ -6,9 +6,10 @@ auth_token  = "c8538afb552415cf2fa302df659d91c3"
 client = TwilioRestClient(account_sid, auth_token)
 
 
-run = raw_input("Start? > ")
+run = raw_input("Start? > ") 
 mins = 0
-if run == "start":
+if run == "start": #change this to when trip ends 
+    #send push notification
     while mins != 15:
         time.sleep(60)
         mins += 1
