@@ -24,7 +24,8 @@ if mins == 0:
             isVerified = true;
         if mins == 15:
             if isVerified == false:
-                message = client.messages.create(body= user.name "did not check in, person was last at" user.location,
+                user = EmergencyContacts.Query.get(name="") #People is the name of the table, name=name of person
+                message = client.messages.create(body= str(user.name) +  "did not check in, person was last at" + str(user.location),
                     to="+14155496801",    # Replace with your phone number
                     from_="+19099627422") # Replace with your Twilio number
                 print message.sid
