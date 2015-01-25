@@ -2,8 +2,12 @@ from parse_rest.connection import register
 from parse_rest.datatypes import Object
 import time
 from apns import APNs, Frame, Payload
+from twilio.rest import TwilioRestClient
 register("lkHCX43bL8tqi0kpiICrOdXLlcx6yxDs3k9rUE5A", "uIE9zOF0dsbr5N9uPrtF2eBDiuGiIhuffvFsdaaA", master_key="ikropQhezf8HiYJKg0ZidOJ0Oa2I9RLRsdzP16Zt")
 
+account_sid = "ACa4d40581688ac7d51dc5c16b3c7e2137" #twilio
+auth_token  = "c8538afb552415cf2fa302df659d91c3" #twilio
+client = TwilioRestClient(account_sid, auth_token) #twilio
 
 class EmergencyContacts(Object):
 	#stores name of user's name and list of emergency phone numbers
