@@ -1,6 +1,8 @@
 from parse_rest.connection import register
 from parse_rest.datatypes import Object
-import time
+from parse_rest.user import User
+import time, json, httplib
+import urllib
 from apns import APNs, Frame, Payload
 from twilio.rest import TwilioRestClient
 register("lkHCX43bL8tqi0kpiICrOdXLlcx6yxDs3k9rUE5A", "uIE9zOF0dsbr5N9uPrtF2eBDiuGiIhuffvFsdaaA", master_key="ikropQhezf8HiYJKg0ZidOJ0Oa2I9RLRsdzP16Zt")
@@ -23,10 +25,23 @@ class Users(Object):
 
 
 #NOTE: ONLY IOS APP WILL BE ADDING/EDITTING THE Users TABLE. WE ARE RETRIEVING DATA FROM PARSE.
+connection = httplib.HTTPSConnection('api.parse.com', 443)
+params = urllib.urlencode({'where': json.dumps({
+	{
+		"onTrip": True
+	}
+}),
+	'order':'lastPing'})
+connection.connect()
 cur_time = int(time.time()) #in unix time
 while True:
 	time.sleep(60) #so we don't overload the db
-	users = Users.Query.all().filter(onTrip = True).order_by('lastPing')
+	connection.request('GET', '/1/classes/EmergencyContacts?%s' % params, '', {
+	'X-Parse-Application-Id': 'lkHCX43bL8tqi0kpiICrOdXLlcx6yxDs3k9rUE5A',
+	'X-Parse-REST-API-Key': 'uIE9zOF0dsbr5N9uPrtF2eBDiuGiIhuffvFsdaaA',
+	})
+	users = json.loads(connection.getresponse().read())
+	#users = Users.Query.all().filter(onTrip = True).order_by('lastPing')
 	for user in users:
 		cur_time = int(time.time())
 
@@ -49,4 +64,4 @@ while True:
 			#send push notification to iphone
 			token_hex = '2ae38011b9d95323b090a0905dbce4f0b61341b0409892343b21330e976572c8'
 			payload = Payload(alert="Hello! Please check-in", sound="default", badge=1)
-			apns.gateway_server.send_notification(token_hex, payload)
+			APNs.gateway_server.send_notification(token_hex, payload)
