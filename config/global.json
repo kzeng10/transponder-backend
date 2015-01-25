@@ -1,0 +1,11 @@
+{
+    "applications": {
+        "Transponder": {
+            "applicationId": "jZgnUFI1ZReCtHjbTt5YTsZSnjooU5cMZnihdE7U", 
+            "masterKey": "mDeDkQF6rnD7Asmcba7AkiTnMmMoEv8lqYS4GHlC"
+        }, 
+        "_default": {
+            "link": "Transponder"
+        }
+    }
+}
