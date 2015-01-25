@@ -8,6 +8,7 @@ client = TwilioRestClient(account_sid, auth_token)
 
 
 run = 0
+isVerified = false
 mins = raw_input("Mins?") #change this to whatever sets the time of the trip
 while mins != 0:
     time.sleep(60)
