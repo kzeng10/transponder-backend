@@ -4,5 +4,5 @@ register("lkHCX43bL8tqi0kpiICrOdXLlcx6yxDs3k9rUE5A", "uIE9zOF0dsbr5N9uPrtF2eBDiu
 class EmergencyContacts(Object):
 	pass
 
-contact = EmergencyContacts(Name="david", Email="david@gmail.com")
+contact = EmergencyContacts(Name="david", Phone="+18000000000")
 contact.save()
