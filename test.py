@@ -10,7 +10,9 @@ client = TwilioRestClient(account_sid, auth_token)
 run = raw_input("Start? > ")
 mins = 0
 if run == "start": #change this to when trip ends
-    #send push notification
+    token_hex = '*******'
+    payload = Payload(alert="Hello! Please check-in", sound="default", badge=1)
+    apns.gateway_server.send_notification(token_hex, payload)
     while mins != 15:
         time.sleep(60)
         mins += 1
