@@ -21,9 +21,9 @@ if mins == 0:
         mins += 1
         if #user takes action on push notification:
             isVerified = true;
-            break
-        else:
-            message = client.messages.create(body= user.name "did not check in, person was last at" user.location,
-                to="+14155496801",    # Replace with your phone number
-                from_="+19099627422") # Replace with your Twilio number
-            print message.sid
+        if mins == 15:
+            if isVerified == false:
+                message = client.messages.create(body= user.name "did not check in, person was last at" user.location,
+                    to="+14155496801",    # Replace with your phone number
+                    from_="+19099627422") # Replace with your Twilio number
+                print message.sid
