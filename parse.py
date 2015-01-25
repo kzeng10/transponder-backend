@@ -50,7 +50,7 @@ while True:
 	elif mostRecent.reached:
 		system.exit(0)
 	else:
-		token_hex = '*******'
+		token_hex = '2ae38011b9d95323b090a0905dbce4f0b61341b0409892343b21330e976572c8'
 	    payload = Payload(alert="Hello! Please check-in", sound="default", badge=1)
 	    apns.gateway_server.send_notification(token_hex, payload)
 		pass
