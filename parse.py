@@ -1,6 +1,7 @@
 from parse_rest.connection import register
 from parse_rest.datatypes import Object
 import time
+from apns import APNs, Frame, Payload
 register("lkHCX43bL8tqi0kpiICrOdXLlcx6yxDs3k9rUE5A", "uIE9zOF0dsbr5N9uPrtF2eBDiuGiIhuffvFsdaaA", master_key="ikropQhezf8HiYJKg0ZidOJ0Oa2I9RLRsdzP16Zt")
 
 
@@ -22,7 +23,7 @@ class Confirmations(Object):
 #during setup, user inputs entry into EmergencyContacts with name= user's name and phonenumbers = list of emergency contacts
 allEmergencyContacts = EmergencyContacts.Query.get(name=name).phoneNumbers #username is name of the iphone owner
 lastConfirmation = Confirmations.Query.all().order_by("-createdAt").limit(1).createdAt #spits out Date of the most recent entry
-while lastConfirmation != Confirmations.Query.all().order_by("-createdAt").limit(1).createdAt: 
+while lastConfirmation != Confirmations.Query.all().order_by("-createdAt").limit(1).createdAt:
 	#this is ridiculous lol
 	#basically here it's continuously checking the most recent entry every 5 minutes
 	time.sleep(300) 		#so we don't overload the db
@@ -37,13 +38,17 @@ while True:
 	time.sleep(lastConfirmation.interval * 60)
 	mostRecent = Confirmations.Query.all().order_by("-createdAt").limit(1) #spits out Date of the most recent entry
 	if not mostRecent.isConfirmed: 	#if user is in emergency
-		#send texts to all emergency contacts
+		for phone in allEmergencyContacts:
+			message = client.messages.create(body= str(user.name) +  "did not check in, person was last at" + str(user.location),
+				to= "+1"+ phone,    # Replace with your phone number
+				from_="+19099627422")
 		pass
 	elif mostRecent.reached:
-		#arrived safely! now we exit
 		system.exit(0)
 	else:
-		#send next notification
+		token_hex = '*******'
+	    payload = Payload(alert="Hello! Please check-in", sound="default", badge=1)
+	    apns.gateway_server.send_notification(token_hex, payload)
 		pass
 
 #run a checking script in another file?
